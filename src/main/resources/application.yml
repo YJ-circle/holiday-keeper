@@ -1,0 +1,26 @@
+server:
+  port: ${KEEPER_WEB_PORT:8080}
+
+spring:
+  application:
+    name: HolidayKeeper
+  datasource:
+    url: ${DB_URL:jdbc:h2:tcp://localhost/~/test}
+    username: ${DB_USERNAME:test}
+    password: ${DB_PASSWORD:1234}
+    driver-class-name: ${DB_CLASS_NAME:org.h2.Driver}
+  jpa:
+    database-platform: ${DB_PLATFORM:org.hibernate.dialect.H2Dialect}
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: ${JPA_SQL_VIEW:false}
+logging:
+  file:
+    name: ${LOG_FILE_NAME:holiday_keeper}.log
+  level:
+    root: ${LOG_ROOT_LEVEL:info}
+  logback:
+    rollingpolicy:
+      max-file-size: 5MB

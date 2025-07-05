@@ -38,3 +38,9 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+test {
+    jvmArgs += [
+            "-javaagent:${classpath.find { it.name.contains("mockito-inline") || it.name.contains("mockito-core") }}"
+    ]
+}

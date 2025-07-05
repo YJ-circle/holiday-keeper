@@ -5,7 +5,7 @@ spring:
   application:
     name: HolidayKeeper
   datasource:
-    url: ${DB_URL:jdbc:h2:tcp://localhost/~/test}
+    url: ${DB_URL:jdbc:h2:tcp://localhost:19092/test}
     username: ${DB_USERNAME:test}
     password: ${DB_PASSWORD:1234}
     driver-class-name: ${DB_CLASS_NAME:org.h2.Driver}

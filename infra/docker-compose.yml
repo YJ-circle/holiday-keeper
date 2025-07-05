@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  h2:
+    build: ./h2
+    container_name: HolidayKeeper-h2-db
+    ports:
+      - "19092:9092"
+      - "18181:81"
+    volumes:
+      - ./h2/data:/opt/h2-data
+      - ./h2/sql:/sql:ro
+    restart: always
+    networks:
+      - holiday-keeper-networks
+
+networks:
+  holiday-keeper-networks:
+    driver: bridge

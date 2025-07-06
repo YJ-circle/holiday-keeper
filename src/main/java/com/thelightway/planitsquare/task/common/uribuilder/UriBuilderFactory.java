@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.thelightway.planitsquare.task.common.uribuilder.exception.UriBuilderException;
@@ -13,11 +12,10 @@ import com.thelightway.planitsquare.task.common.uribuilder.exception.UriBuilderE
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
 public class UriBuilderFactory {
-	private final Map<String, UriBuilder> uriBuilderMap = new ConcurrentHashMap<>();
+	private static final Map<String, UriBuilder> uriBuilderMap = new ConcurrentHashMap<>();
 
-	public UriBuilder getUriBuilder(String host) {
+	public static UriBuilder getBuilder(String host) {
 		return uriBuilderMap.computeIfAbsent(host, UriBuilder::new);
 	}
 

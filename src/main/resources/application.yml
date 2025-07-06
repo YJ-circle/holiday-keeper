@@ -24,3 +24,10 @@ logging:
   logback:
     rollingpolicy:
       max-file-size: 5MB
+
+api:
+  holiday:
+    host: date.nager.at
+    path:
+      country: /api/v3/AvailableCountries
+      holidays: /api/v3/PublicHolidays

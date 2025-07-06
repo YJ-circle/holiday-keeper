@@ -24,7 +24,6 @@ public class UriBuilderFactory {
 
 		private UriBuilder(String host) {
 			if (host == null || host.isEmpty()) {
-				log.error("Host 값이 Null 일 수 없습니다.");
 				throw new UriBuilderException(HttpStatus.BAD_REQUEST, "HOST 값은 빈 값일 수 없습니다.");
 			}
 			this.HOST = host;

@@ -2,7 +2,7 @@ package com.thelightway.planitsquare.task.country.repository.entity;
 
 import com.thelightway.planitsquare.task.country.dto.Country;
 
-public class CountyEntityMapper {
+public class CountryEntityMapper {
 	public static CountryEntity toEntity(Country country) {
 		return CountryEntity.builder()
 			.code(country.code())

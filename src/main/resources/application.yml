@@ -16,6 +16,9 @@ spring:
     properties:
       hibernate:
         format_sql: ${JPA_SQL_VIEW:false}
+  batch:
+    job:
+      enabled: false
 logging:
   file:
     name: ${LOG_FILE_NAME:holiday_keeper}.log

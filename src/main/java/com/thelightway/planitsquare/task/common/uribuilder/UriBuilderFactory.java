@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UriBuilderFactory {
 	private static final Map<String, UriBuilder> uriBuilderMap = new ConcurrentHashMap<>();
 
-	public static UriBuilder getBuilder(String host) {
+	public static UriBuilder builder(String host) {
 		return uriBuilderMap.computeIfAbsent(host, UriBuilder::new);
 	}
 

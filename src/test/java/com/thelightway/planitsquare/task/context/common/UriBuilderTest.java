@@ -16,7 +16,7 @@ public class UriBuilderTest {
 		String host = "date.nager.at";
 		String path = "/api/v3/AvailableCountries";
 
-		UriBuilderFactory.UriBuilder hoildayUriBuilder = UriBuilderFactory.getBuilder(host);
+		UriBuilderFactory.UriBuilder hoildayUriBuilder = UriBuilderFactory.builder(host);
 		URI countryUri = hoildayUriBuilder.build(path);
 		assertThat(countryUri.getHost()).isEqualTo(host);
 		assertThat(countryUri.getPath()).isEqualTo(path);
@@ -28,7 +28,7 @@ public class UriBuilderTest {
 		System.out.println("URI 객체 생성 테스트(실패 상황) 시작");
 		String host = "";
 		assertThatThrownBy(() -> {
-			UriBuilderFactory.getBuilder(host);
+			UriBuilderFactory.builder(host);
 		}).isInstanceOf(UriBuilderException.class);
 		System.out.println("URI 객체 생성 테스트(실패 상황) 종료");
 	}

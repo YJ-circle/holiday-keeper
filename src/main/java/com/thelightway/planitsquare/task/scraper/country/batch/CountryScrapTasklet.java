@@ -15,8 +15,8 @@ import org.springframework.web.client.RestTemplate;
 import com.thelightway.planitsquare.task.common.uribuilder.UriBuilderFactory;
 import com.thelightway.planitsquare.task.country.dto.Country;
 import com.thelightway.planitsquare.task.country.repository.entity.CountryEntity;
+import com.thelightway.planitsquare.task.country.repository.entity.CountryEntityMapper;
 import com.thelightway.planitsquare.task.country.repository.entity.CountryJpaRepository;
-import com.thelightway.planitsquare.task.country.repository.entity.CountyEntityMapper;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class CountryScrapTasklet implements Tasklet {
 		@Value("${api.holiday.path.country}") String path,
 		CountryJpaRepository countryJpaRepository) {
 		this.restTemplate = restTemplate;
-		this.uri = UriBuilderFactory.getBuilder(host).build(path);
+		this.uri = UriBuilderFactory.builder(host).build(path);
 		this.countryJpaRepository = countryJpaRepository;
 	}
 
@@ -44,7 +44,7 @@ public class CountryScrapTasklet implements Tasklet {
 		log.info("==== 국가 정보 수집 시작 ====");
 		Country[] countriesArray = restTemplate.getForObject(uri, Country[].class);
 		//우선 수집 먼저 작업
-		if(countriesArray == null || countriesArray.length == 0) {
+		if (countriesArray == null || countriesArray.length == 0) {
 			//TODO: API 응답 값 결과가 없을 때 예외처리
 			return RepeatStatus.FINISHED;
 		}
@@ -56,10 +56,10 @@ public class CountryScrapTasklet implements Tasklet {
 
 	private void saveCountry(Country[] countriesArray) {
 		List<CountryEntity> countries = Arrays.stream(countriesArray)
-										.map(CountyEntityMapper::toEntity).toList();
+										.map(CountryEntityMapper::toEntity).toList();
 		try {
 			countryJpaRepository.saveAll(countries);
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}

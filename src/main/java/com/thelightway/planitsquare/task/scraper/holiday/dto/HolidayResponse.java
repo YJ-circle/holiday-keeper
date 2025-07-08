@@ -4,19 +4,19 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.Builder;
 
 @Builder
-public record Holiday(
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public record HolidayResponse(
 	@JsonFormat(pattern = "yyyy-MM-dd") LocalDate date,
 	String localName,
 	String name,
 	String countryCode,
-	boolean fixed,
 	boolean global,
 	Set<String> counties,
-	Integer launchYear,
 	Set<String> types
 ) {
 }

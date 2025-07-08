@@ -17,6 +17,7 @@ import com.thelightway.planitsquare.task.country.dto.Country;
 import com.thelightway.planitsquare.task.country.repository.entity.CountryEntity;
 import com.thelightway.planitsquare.task.country.repository.entity.CountryEntityMapper;
 import com.thelightway.planitsquare.task.country.repository.entity.CountryJpaRepository;
+import com.thelightway.planitsquare.task.scraper.exception.EmptyApiResponseException;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -43,10 +44,8 @@ public class CountryScrapTasklet implements Tasklet {
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		log.info("==== 국가 정보 수집 시작 ====");
 		Country[] countriesArray = restTemplate.getForObject(uri, Country[].class);
-		//우선 수집 먼저 작업
 		if (countriesArray == null || countriesArray.length == 0) {
-			//TODO: API 응답 값 결과가 없을 때 예외처리
-			return RepeatStatus.FINISHED;
+			throw new EmptyApiResponseException("공휴일 API 응답이 null이거나 빈 배열입니다. URI=" + uri);
 		}
 		saveCountry(countriesArray);
 		//TODO: 삭제된 국가는 소프트 삭제 처리

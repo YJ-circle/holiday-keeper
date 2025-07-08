@@ -1,31 +1,44 @@
 package com.thelightway.planitsquare.task.scraper.holiday.batch.partitioner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.partition.support.Partitioner;
 import org.springframework.batch.item.ExecutionContext;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thelightway.planitsquare.task.country.repository.entity.CountryEntity;
 import com.thelightway.planitsquare.task.country.repository.entity.CountryJpaRepository;
 
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
-@RequiredArgsConstructor
-public class HolidayScraperPartitioner implements Partitioner {
-	private final CountryJpaRepository countryJpaRepository;
+@StepScope
+public class HolidayScraperPartitionerByRequest implements Partitioner {
+	private final String requestCountries;
+	private final ObjectMapper objectMapper;
+
+	public HolidayScraperPartitionerByRequest(
+		@Value("#{jobParameters['countryCodes']}") String countries
+	) {
+		this.requestCountries = countries;
+		this.objectMapper = new ObjectMapper();
+	}
 
 	@Override
 	public Map<String, ExecutionContext> partition(int gridSize) {
-		List<String> allIds = getCountryIds();
-		for (String allId : allIds) {
-			System.out.println(allId);
-		}
-		int total = allIds.size();
+		String countriesText = requestCountries;
+		List<String> countries = Arrays.asList(countriesText.split(","));
+		int total = countries.size();
 		int chunkSize = (int)Math.ceil((double)total / gridSize);
 
 		Map<String, ExecutionContext> result = new HashMap<>(gridSize);
@@ -36,7 +49,7 @@ public class HolidayScraperPartitioner implements Partitioner {
 			if (start >= end) {
 				break;
 			}
-			List<String> subList = new ArrayList<>(allIds.subList(start, end));
+			List<String> subList = new ArrayList<>(countries.subList(start, end));
 			ExecutionContext ec = new ExecutionContext();
 			ec.put("ids", subList);
 
@@ -44,11 +57,5 @@ public class HolidayScraperPartitioner implements Partitioner {
 		}
 
 		return result;
-	}
-
-	private List<String> getCountryIds() {
-		return countryJpaRepository.findAllByActive(true)
-			.stream().map(CountryEntity::getCode)
-			.toList();
 	}
 }

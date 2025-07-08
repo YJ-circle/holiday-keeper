@@ -4,8 +4,8 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
 import com.thelightway.planitsquare.task.scraper.holiday.dto.Holiday;
-import com.thelightway.planitsquare.task.scraper.holiday.entity.HolidayEntity;
-import com.thelightway.planitsquare.task.scraper.holiday.entity.HolidayEntityMapper;
+import com.thelightway.planitsquare.task.holiday.entity.HolidayEntity;
+import com.thelightway.planitsquare.task.holiday.mapper.HolidayEntityMapper;
 
 @Component
 public class HolidayScraperItemProcessor implements ItemProcessor<Holiday, HolidayEntity> {

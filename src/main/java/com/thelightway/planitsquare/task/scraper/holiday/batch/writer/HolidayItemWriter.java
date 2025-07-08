@@ -3,7 +3,7 @@ package com.thelightway.planitsquare.task.scraper.holiday.batch.writer;
 import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.stereotype.Component;
 
-import com.thelightway.planitsquare.task.scraper.holiday.entity.HolidayEntity;
+import com.thelightway.planitsquare.task.holiday.entity.HolidayEntity;
 
 import jakarta.persistence.EntityManagerFactory;
 

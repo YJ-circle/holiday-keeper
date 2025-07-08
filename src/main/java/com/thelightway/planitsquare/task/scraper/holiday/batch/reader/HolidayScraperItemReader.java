@@ -17,6 +17,9 @@ import org.springframework.web.client.RestTemplate;
 import com.thelightway.planitsquare.task.common.uribuilder.UriBuilderFactory;
 import com.thelightway.planitsquare.task.scraper.holiday.dto.Holiday;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 @StepScope
 public class HolidayScraperItemReader implements ItemReader<Holiday> {
@@ -29,7 +32,7 @@ public class HolidayScraperItemReader implements ItemReader<Holiday> {
 	public HolidayScraperItemReader(
 		@Value("${api.holiday.host}") String host,
 		@Value("${api.holiday.path.holidays}") String basePath,
-		@Value("#{jobParameters['year'] ?: '2025'}") String year,
+		@Value("#{jobParameters['year']}") String year,
 		RestTemplate restTemplate) {
 		this.host = host;
 		this.basePath = basePath;
@@ -39,10 +42,18 @@ public class HolidayScraperItemReader implements ItemReader<Holiday> {
 
 	@BeforeStep
 	public void beforeStep(StepExecution stepExecution) {
+		if(year == null || year.isEmpty()) {
+			//TODO: 추후 예외 처리
+			throw new RuntimeException("연도는 빈 값일 수 없습니다.");
+		}
+
 		List<Holiday> holidays = new ArrayList<>();
 		List<String> countryIds = (List<String>)stepExecution.getExecutionContext().get("ids");
+		log.info("Thread: " + Thread.currentThread().getName() + " 공휴일 정보 수집 시작");
+		log.info("  - " + countryIds + ": " + year);
 		for (String countryId : countryIds) {
 			URI uri = UriBuilderFactory.builder(host).build(basePath + "/" + year + "/" + countryId);
+			System.out.println("uri = " + uri);
 			Holiday[] holidayArrays = restTemplate.getForObject(uri, Holiday[].class);
 			if (holidayArrays == null || holidayArrays.length == 0) {
 				// TODO: 예외처리

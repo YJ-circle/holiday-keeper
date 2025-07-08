@@ -10,35 +10,47 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import com.thelightway.planitsquare.task.common.batch.ExecuterConfig;
-import com.thelightway.planitsquare.task.scraper.holiday.batch.partitioner.HolidayScraperPartitioner;
+import com.thelightway.planitsquare.task.scraper.holiday.batch.partitioner.HolidayScraperPartitionerByRequest;
+import com.thelightway.planitsquare.task.scraper.holiday.batch.partitioner.HolidayScraperPartitionerWithAllCountry;
 import com.thelightway.planitsquare.task.scraper.holiday.batch.processor.HolidayScraperItemProcessor;
 import com.thelightway.planitsquare.task.scraper.holiday.batch.reader.HolidayScraperItemReader;
 import com.thelightway.planitsquare.task.scraper.holiday.batch.writer.HolidayItemWriter;
 import com.thelightway.planitsquare.task.scraper.holiday.dto.Holiday;
-import com.thelightway.planitsquare.task.scraper.holiday.entity.HolidayEntity;
+import com.thelightway.planitsquare.task.holiday.entity.HolidayEntity;
 
 @Configuration
 public class HolidayScraperStepConfig {
-	public static final String holidayScraperMasterStepName = "holidayScraperMasterStep";
+	public static final String HOLIDAY_SCRAPER_ALL_COUNTRY_STEP = "holidayScraperMasterStep";
+	public static final String HOLIDAY_SCRAP_MANUAL_STEP = "holidayScraperManualStep";
 	public static final String holidayScraperStepName = "holidayScraperSlaveStep";
-	private final HolidayScraperPartitioner holidayScraperPartitioner;
 	private final JobRepository jobRepository;
 	private final TaskExecutor taskExecutor;
 
 	public HolidayScraperStepConfig(
-		HolidayScraperPartitioner holidayScraperPartitioner,
+		HolidayScraperPartitionerWithAllCountry holidayScraperPartitionerWithAllCountry,
 		JobRepository jobRepository,
 		@Qualifier(ExecuterConfig.NORMAL_EXECUTOR_NAME) TaskExecutor taskExecutor
 	) {
-		this.holidayScraperPartitioner = holidayScraperPartitioner;
 		this.jobRepository = jobRepository;
 		this.taskExecutor = taskExecutor;
 	}
 
-	@Bean(holidayScraperMasterStepName)
-	public Step createMasterStep(@Qualifier(holidayScraperStepName) Step scraperStep) {
-		return new StepBuilder(holidayScraperMasterStepName, jobRepository)
-			.partitioner(holidayScraperStepName, holidayScraperPartitioner)
+	@Bean(HOLIDAY_SCRAPER_ALL_COUNTRY_STEP)
+	public Step createMasterStep(@Qualifier(holidayScraperStepName) Step scraperStep,
+								HolidayScraperPartitionerWithAllCountry partitioner) {
+		return new StepBuilder(HOLIDAY_SCRAPER_ALL_COUNTRY_STEP, jobRepository)
+			.partitioner(holidayScraperStepName, partitioner)
+			.step(scraperStep)
+			.taskExecutor(taskExecutor)
+			.gridSize(5)
+			.build();
+	}
+
+	@Bean(HOLIDAY_SCRAP_MANUAL_STEP)
+	public Step createHolidayStepByManual(@Qualifier(holidayScraperStepName) Step scraperStep,
+										HolidayScraperPartitionerByRequest partitioner) {
+		return new StepBuilder(HOLIDAY_SCRAP_MANUAL_STEP, jobRepository)
+			.partitioner(holidayScraperStepName, partitioner)
 			.step(scraperStep)
 			.taskExecutor(taskExecutor)
 			.gridSize(5)

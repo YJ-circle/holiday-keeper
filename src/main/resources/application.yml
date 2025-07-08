@@ -16,6 +16,7 @@ spring:
     properties:
       hibernate:
         format_sql: ${JPA_SQL_VIEW:false}
+    open-in-view: false
   batch:
     job:
       enabled: false

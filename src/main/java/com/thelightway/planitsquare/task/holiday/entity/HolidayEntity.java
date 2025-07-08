@@ -1,4 +1,4 @@
-package com.thelightway.planitsquare.task.scraper.holiday.entity;
+package com.thelightway.planitsquare.task.holiday.entity;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -54,6 +54,7 @@ public class HolidayEntity extends SoftDeletedEntity {
 	@Column(name = "launch_year")
 	private Integer launchYear;
 
+	@Builder.Default
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(
 		name = "holiday_counties",
@@ -62,6 +63,7 @@ public class HolidayEntity extends SoftDeletedEntity {
 	@Column(name = "county_code", length = 5)
 	private Set<String> counties = new HashSet<>();
 
+	@Builder.Default
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(
 		name = "holiday_types",

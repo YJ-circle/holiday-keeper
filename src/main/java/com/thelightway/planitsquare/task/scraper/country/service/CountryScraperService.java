@@ -11,21 +11,25 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
 
-import com.thelightway.planitsquare.task.common.batch.ExecuterConfig;
+import com.thelightway.planitsquare.task.common.batch.TaskExecutorConfig;
 import com.thelightway.planitsquare.task.scraper.country.batch.CountryJobConfig;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class CountryScraperService {
 	private final AtomicBoolean isRunning = new AtomicBoolean(false);
 	private final JobLauncher jobLauncher;
-	@Qualifier(CountryJobConfig.COUNTRY_SCRAP_JOB_NAME)
 	private final Job countryScrapJob;
-
-	@Qualifier(ExecuterConfig.NORMAL_EXECUTOR_NAME)
 	private final TaskExecutor normalExecutor;
+
+	public CountryScraperService(
+		JobLauncher jobLauncher,
+		@Qualifier(CountryJobConfig.COUNTRY_SCRAP_JOB_NAME) Job countryScrapJob,
+		@Qualifier(TaskExecutorConfig.NORMAL_EXECUTOR_NAME) TaskExecutor normalExecutor) {
+
+		this.jobLauncher = jobLauncher;
+		this.countryScrapJob = countryScrapJob;
+		this.normalExecutor = normalExecutor;
+	}
 
 	public boolean startCountryScrap() {
 		if (!isRunning.compareAndSet(false, true)) {

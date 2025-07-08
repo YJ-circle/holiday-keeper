@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.thelightway.planitsquare.task.common.batch.ExecuterConfig;
+import com.thelightway.planitsquare.task.common.batch.TaskExecutorConfig;
 import com.thelightway.planitsquare.task.scraper.holiday.batch.partitioner.HolidayScraperPartitionerByRequest;
 import com.thelightway.planitsquare.task.scraper.holiday.batch.partitioner.HolidayScraperPartitionerWithAllCountry;
 import com.thelightway.planitsquare.task.scraper.holiday.batch.processor.HolidayScraperItemProcessor;
@@ -27,9 +27,8 @@ public class HolidayScraperStepConfig {
 	private final TaskExecutor taskExecutor;
 
 	public HolidayScraperStepConfig(
-		HolidayScraperPartitionerWithAllCountry holidayScraperPartitionerWithAllCountry,
 		JobRepository jobRepository,
-		@Qualifier(ExecuterConfig.NORMAL_EXECUTOR_NAME) TaskExecutor taskExecutor
+		@Qualifier(TaskExecutorConfig.NORMAL_EXECUTOR_NAME) TaskExecutor taskExecutor
 	) {
 		this.jobRepository = jobRepository;
 		this.taskExecutor = taskExecutor;

@@ -12,10 +12,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
 
-import com.thelightway.planitsquare.task.common.batch.ExecuterConfig;
+import com.thelightway.planitsquare.task.common.batch.TaskExecutorConfig;
 import com.thelightway.planitsquare.task.scraper.holiday.batch.job.HolidayJobConfig;
-
-import lombok.RequiredArgsConstructor;
 
 @Service
 public class HolidayScraperService {
@@ -27,7 +25,7 @@ public class HolidayScraperService {
 	public HolidayScraperService(
 		JobLauncher jobLauncher,
 		@Qualifier(HolidayJobConfig.HOLIDAY_SCRAP_MANUAL_JOB_NAME) Job holidayScrapJob,
-		@Qualifier(ExecuterConfig.NORMAL_EXECUTOR_NAME) TaskExecutor normalExecutor
+		@Qualifier(TaskExecutorConfig.NORMAL_EXECUTOR_NAME) TaskExecutor normalExecutor
 	){
 		this.jobLauncher = jobLauncher;
 		this.holidayScrapJob = holidayScrapJob;

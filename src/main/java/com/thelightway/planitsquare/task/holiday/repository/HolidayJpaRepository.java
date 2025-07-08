@@ -15,4 +15,7 @@ public interface HolidayJpaRepository extends JpaRepository<HolidayEntity, Long>
 
 	Page<HolidayEntity> findByCountryCodeAndActiveAndDateBetween(String countryCode, boolean active,
 		LocalDate startDate, LocalDate endDate, Pageable pageable);
+
+	Page<HolidayEntity> findByDateBetweenAndActive(LocalDate startDate, LocalDate endDate, boolean active,
+		Pageable pageable);
 }

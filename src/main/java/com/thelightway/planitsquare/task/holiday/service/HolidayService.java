@@ -29,12 +29,21 @@ public class HolidayService {
 		return HolidayEntityMapper.toPageResponse(holidayPage);
 	}
 
+	public PageResponse<HolidayResponse> getAllHolidayByYear(String requestYear, Pageable pageable) {
+		int year = Integer.parseInt(requestYear);
+		Page<HolidayResponse> holidayPage = holidayJpaRepository.findByDateBetweenAndActive(
+			firstDate(year), lastDate(year), true, pageable
+		).map(HolidayEntityMapper::toResponse);
+
+		return HolidayEntityMapper.toPageResponse(holidayPage);
+	}
+
 	public PageResponse<HolidayResponse> getAllHolidayByCountryAndYear(String country, String requestYear,
 		Pageable pageable) {
 		int year = Integer.parseInt(requestYear);
 		Page<HolidayResponse> holidayPage = holidayJpaRepository.findByCountryCodeAndActiveAndDateBetween(
-												country, true, firstDate(year), lastDate(year), pageable
-											).map(HolidayEntityMapper::toResponse);
+			country, true, firstDate(year), lastDate(year), pageable
+		).map(HolidayEntityMapper::toResponse);
 		return HolidayEntityMapper.toPageResponse(holidayPage);
 	}
 

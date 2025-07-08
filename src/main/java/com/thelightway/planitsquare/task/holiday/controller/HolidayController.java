@@ -27,7 +27,7 @@ public class HolidayController {
 		return success(holidayService.getAllHoliday(pageable));
 	}
 
-	@GetMapping("/{country}")
+	@GetMapping("/country/{country}")
 	public ResponseEntity getHolidayByCountry(
 		@PathVariable("country") String country,
 		@PageableDefault(size = 15, sort = "date") Pageable pageable) {
@@ -35,7 +35,15 @@ public class HolidayController {
 		return success(holidayService.getAllHolidayByCountry(country, pageable));
 	}
 
-	@GetMapping("/{country}/{year}")
+	@GetMapping("/year/{year}")
+	public ResponseEntity getHolidayByYear(
+		@PathVariable("year") String year,
+		@PageableDefault(size = 15, sort = "date") Pageable pageable) {
+
+		return success(holidayService.getAllHolidayByYear(year, pageable));
+	}
+
+	@GetMapping({"/country/{country}/year/{year}", "/year/{year}/country/{country}"})
 	public ResponseEntity getHolidayByCountryAndYear(
 		@PathVariable("country") String country,
 		@PathVariable("year") String year,

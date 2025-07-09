@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = "Holiday", description = "공휴일 API")
+@Tag(name = "Scraper", description = "데이터 수집 API")
 @RestController
 @RequiredArgsConstructor
 public class HolidayScraperCtrl extends AbstractScraperController {

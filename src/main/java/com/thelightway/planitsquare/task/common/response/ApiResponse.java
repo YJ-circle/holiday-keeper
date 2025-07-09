@@ -8,6 +8,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 
+/**
+ * API 응답을 통일된 형태로 응답하기 위한 클래스입니다.
+ */
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
@@ -16,12 +19,6 @@ public class ApiResponse<T> {
 	private String message;
 	private T data;
 
-	public static ResponseEntity<ApiResponse<Void>> success() {
-		ApiResponse<Void> body = ApiResponse.<Void>builder()
-			.build();
-		return ResponseEntity.ok(body);
-	}
-
 	public static ResponseEntity<ApiResponse<Void>> success(String message) {
 		ApiResponse<Void> body = ApiResponse.<Void>builder()
 			.message(message)
@@ -29,8 +26,9 @@ public class ApiResponse<T> {
 		return ResponseEntity.ok(body);
 	}
 
-	public static <T> ResponseEntity<ApiResponse<T>> success(T data) {
+	public static <T> ResponseEntity<ApiResponse<T>> success(String message, T data) {
 		ApiResponse<T> body = ApiResponse.<T>builder()
+			.message(message)
 			.data(data)
 			.build();
 		return ResponseEntity.ok(body);

@@ -42,8 +42,8 @@ public class HolidayScraperCtrl extends AbstractScraperController {
 		@ApiResponse(responseCode = "400", description = "잘못된 요청 데이터"),
 		@ApiResponse(responseCode = "500", description = "서버 내부 오류")
 	})
-	@PostMapping("/holiday")
-	public ResponseEntity requestCountryScrap(
+	@PostMapping("/holidays")
+	public ResponseEntity requestHolidayScrap(
 
 		@io.swagger.v3.oas.annotations.parameters.RequestBody(
 			description = "수집할 국가 목록과 연도를 담은 JSON",
@@ -55,13 +55,10 @@ public class HolidayScraperCtrl extends AbstractScraperController {
 		List<String> countries = holidayScrapRequest.countries();
 		String year = holidayScrapRequest.year();
 		if (holidayScraperService.startHolidayScrap(countries, year)) {
-			Map<String, Object> response = new HashMap<>();
-			response.put("message", REQUEST_SUCCESS_MESSAGE);
 
 			Map<String, String> receiveRequest = new HashMap<>();
 			countries.forEach(country -> receiveRequest.put(country, year));
-			response.put("receiveRequest", receiveRequest);
-			return success(response);
+			return success(REQUEST_SUCCESS_MESSAGE, receiveRequest);
 		}
 		return success(ALREADY_RUNNING_MESSAGE);
 	}

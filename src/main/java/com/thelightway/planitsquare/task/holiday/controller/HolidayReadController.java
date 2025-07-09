@@ -15,16 +15,17 @@ import com.thelightway.planitsquare.task.holiday.service.HolidayService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/holiday")
+@RequestMapping("/api/holidays")
 @RequiredArgsConstructor
-public class HolidayController {
+public class HolidayReadController {
 	private final HolidayService holidayService;
+	private static final String successMessage = "공휴일 조회 요청 성공";
 
 	@GetMapping
 	public ResponseEntity getHoliday(
 		@PageableDefault(size = 15, sort = "date")  Pageable pageable) {
 
-		return success(holidayService.getAllHoliday(pageable));
+		return success(successMessage, holidayService.getAllHoliday(pageable));
 	}
 
 	@GetMapping("/country/{country}")
@@ -32,7 +33,7 @@ public class HolidayController {
 		@PathVariable("country") String country,
 		@PageableDefault(size = 15, sort = "date") Pageable pageable) {
 
-		return success(holidayService.getAllHolidayByCountry(country, pageable));
+		return success(successMessage, holidayService.getAllHolidayByCountry(country, pageable));
 	}
 
 	@GetMapping("/year/{year}")
@@ -40,7 +41,7 @@ public class HolidayController {
 		@PathVariable("year") String year,
 		@PageableDefault(size = 15, sort = "date") Pageable pageable) {
 
-		return success(holidayService.getAllHolidayByYear(year, pageable));
+		return success(successMessage, holidayService.getAllHolidayByYear(year, pageable));
 	}
 
 	@GetMapping({"/country/{country}/year/{year}", "/year/{year}/country/{country}"})
@@ -49,6 +50,6 @@ public class HolidayController {
 		@PathVariable("year") String year,
 		@PageableDefault(size = 15, sort = "date") Pageable pageable) {
 
-		return success(holidayService.getAllHolidayByCountryAndYear(country, year, pageable));
+		return success(successMessage, holidayService.getAllHolidayByCountryAndYear(country, year, pageable));
 	}
 }

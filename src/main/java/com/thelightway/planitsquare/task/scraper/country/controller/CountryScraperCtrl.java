@@ -18,7 +18,7 @@ public class CountryScraperCtrl extends AbstractScraperController {
 	private static final String ALREADY_RUNNING_MESSAGE = "국가 수집이 이미 실행 중입니다. 나중에 다시 시도 하세요";
 	private final CountryScraperService countryScraperService;
 
-	@PostMapping("/country")
+	@PostMapping("/countries")
 	public ResponseEntity requestCountryScrap() {
 		if (countryScraperService.startCountryScrap()) {
 			return success(REQUEST_SUCCESS_MESSAGE);

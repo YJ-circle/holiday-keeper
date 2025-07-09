@@ -5,14 +5,14 @@ spring:
   application:
     name: HolidayKeeper
   datasource:
-    url: ${DB_URL:jdbc:h2:tcp://localhost:19092/test}
+    url: ${DB_URL:jdbc:h2:mem:testdb}
     username: ${DB_USERNAME:test}
     password: ${DB_PASSWORD:1234}
     driver-class-name: ${DB_CLASS_NAME:org.h2.Driver}
   jpa:
     database-platform: ${DB_PLATFORM:org.hibernate.dialect.H2Dialect}
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: ${JPA_SQL_VIEW:false}

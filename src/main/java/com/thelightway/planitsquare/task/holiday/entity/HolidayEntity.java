@@ -67,7 +67,7 @@ public class HolidayEntity extends SoftDeletedEntity {
 		name = "holiday_counties",
 		joinColumns = @JoinColumn(name = "holiday_id")
 	)
-	@Column(name = "county_code", length = 5)
+	@Column(name = "county_code", length = 6)
 	private Set<String> counties = new HashSet<>();
 
 	@Builder.Default

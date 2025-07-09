@@ -54,7 +54,7 @@ docker-compose -p "holiday-keeper" down --rmi all --volumes --remove-orphans
 - **Response**: 성공 메시지("국가 수집 요청이 정상적으로 전달되었습니다.")
 
 #### 2) 공휴일 정보
-** 최초로 수집 시작 시에는 5개년 (요구 사항 예시에서는 6개년) 모든 국가의 공휴일을 수집합니다.
+`최초 수집 시작` 시에는 5개년 (요구 사항 예시에서는 6개년) 모든 국가의 공휴일을 수집합니다.
 - **Endpoint**: `POST /api/scraper/holidays`
 - **Description**: 특정 연도와 국가 코드에 해당하는 공휴일 정보를 외부 API로부터 가져와 데이터베이스에 저장합니다.
 - **Request Body**:
@@ -65,6 +65,10 @@ docker-compose -p "holiday-keeper" down --rmi all --volumes --remove-orphans
   }
   ```
 - **Response**: 성공 메시지("수집 요청이 정상적으로 전달되었습니다.")
+
+** 최초 수집 시 실행 되는 Log 스크린 샷 **
+![image](https://github.com/user-attachments/assets/e68016d4-4f45-43cf-8768-aed7d8221470)
+
 ### 2. 공휴일 조회
 
 - **Endpoint**: `GET /country/{country}/year/{year}`

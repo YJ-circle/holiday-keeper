@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(response => response.json())
         .then(data => {
-            alert(`선택된 국가의 ${year}연도 공휴일 수집 요청을 성공적으로 전송했습니다.`);
+            alert(`선택된 국가의 ${year}년 공휴일 수집 요청을 성공적으로 전송했습니다.`);
         })
         .catch(error => {
             alert(`공휴일 수집 요청 전송에 실패했습니다.`);

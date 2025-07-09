@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   h2:
     build: ./h2
@@ -10,9 +8,22 @@ services:
     volumes:
       - ./h2/data:/opt/h2-data
       - ./h2/sql:/sql:ro
-    restart: always
     networks:
       - holiday-keeper-networks
+      
+  spring:
+    build: ./spring
+    image: holiday-keeper-spring:latest
+    container_name: HolidayKeeper-Spring
+    ports:
+      - "8080:8080"
+    networks:
+      - holiday-keeper-networks
+    depends_on:
+      - h2
+    environment:
+      DB_URL: jdbc:h2:tcp://HolidayKeeper-h2-db:9092/test
+      APP_JAR_URL: https://github.com/YJ-circle/holiday-keeper/releases/download/v0.0.1/app.jar
 
 networks:
   holiday-keeper-networks:

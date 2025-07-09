@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function viewHolidays(page = 0) {
         const year = yearInput.value;
         const countryCode = countrySelect.value;
-        const size = 15;
+        const size = 10;
 
         if (!year) {
             alert('Please select a year.');

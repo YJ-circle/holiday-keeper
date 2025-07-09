@@ -16,6 +16,12 @@ spring:
     properties:
       hibernate:
         format_sql: ${JPA_SQL_VIEW:false}
+        jdbc:
+          batch_size: 100
+          batch_versioned_data: true
+        order_inserts: true
+        order_updates: true
+
     open-in-view: false
   batch:
     job:

@@ -26,13 +26,13 @@ public class HolidayScraperService {
 		JobLauncher jobLauncher,
 		@Qualifier(HolidayJobConfig.HOLIDAY_SCRAP_MANUAL_JOB_NAME) Job holidayScrapJob,
 		@Qualifier(TaskExecutorConfig.NORMAL_EXECUTOR_NAME) TaskExecutor normalExecutor
-	){
+	) {
 		this.jobLauncher = jobLauncher;
 		this.holidayScrapJob = holidayScrapJob;
 		this.normalExecutor = normalExecutor;
 	}
 
-	public boolean startHolidayScrap(List<String> countries, String year) {
+	public boolean startHolidayScrap(List<String> countries, int year) {
 		if (!isRunning.compareAndSet(false, true)) {
 			return false;
 		}
@@ -41,17 +41,18 @@ public class HolidayScraperService {
 		return true;
 	}
 
-	private void jobStart(String countries, String year) {
+	private void jobStart(String countries, int year) {
+
 		JobParameters params = new JobParametersBuilder()
 			.addString("countryCodes", countries)
-			.addString("year", year)
+			.addString("year", String.valueOf(year))
 			.addLong("requestTime", System.currentTimeMillis())
 			.toJobParameters();
 		normalExecutor.execute(() -> {
 				try {
 					jobLauncher.run(holidayScrapJob, params);
 				} catch (JobExecutionException e) {
-					//잡 실행 오류
+					//TODO: 예외처리 추가
 				} finally {
 					isRunning.set(false);
 				}

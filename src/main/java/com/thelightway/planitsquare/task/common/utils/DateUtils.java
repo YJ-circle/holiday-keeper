@@ -14,4 +14,8 @@ public class DateUtils {
 	public static int getCurrentYear() {
 		return LocalDate.now().getYear();
 	}
+
+	public static int getPreviousYear() {
+		return LocalDate.now().getYear() - 1;
+	}
 }

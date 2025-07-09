@@ -15,6 +15,6 @@ public record HolidayScrapRequest(
 		description = "연도 (YYYY)",
 		example = "2025"
 	)
-	String year
+	int year
 ) {
 }

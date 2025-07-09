@@ -53,10 +53,10 @@ public class HolidayScraperCtrl extends AbstractScraperController {
 		@RequestBody
 		HolidayScrapRequest holidayScrapRequest) {
 		List<String> countries = holidayScrapRequest.countries();
-		String year = holidayScrapRequest.year();
+		int year = holidayScrapRequest.year();
 		if (holidayScraperService.startHolidayScrap(countries, year)) {
 
-			Map<String, String> receiveRequest = new HashMap<>();
+			Map<String, Integer> receiveRequest = new HashMap<>();
 			countries.forEach(country -> receiveRequest.put(country, year));
 			return success(REQUEST_SUCCESS_MESSAGE, receiveRequest);
 		}

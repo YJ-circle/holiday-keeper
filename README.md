@@ -180,6 +180,10 @@ docker-compose -p "holiday-keeper" down --rmi all --volumes --remove-orphans
 - **Swagger UI**: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 - **OpenAPI JSON**: [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
 
-## 웹 화면
+## 웹 화면 접속 방법 (html, css, js)
 웹화면 [http://localhost:8080](http://localhost:8080) 에서도 테스트 해볼 수 있습니다.
 ![image](https://github.com/user-attachments/assets/31f00688-6746-458f-b426-c188a60c92a4)
+
+
+## 데모 페이지
+[https://holiday-demo.techlog.dev/](https://holiday-demo.techlog.dev/)

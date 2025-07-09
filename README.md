@@ -160,6 +160,15 @@ docker-compose -p "holiday-keeper" down --rmi all --volumes --remove-orphans
     ]
   }
   ```
+### 5. 배치 자동화
+- **스케줄러 활성화:** `@EnableScheduling` (`@SpringBootApplication` 클래스에 추가)  
+- **주기 설정:** `@Scheduled(cron = "...", zone = "...")`  
+- **스케줄러 실행 시점:** 매년 1월 2일 01:00 KST
+
+**배치 자동화 코드 스크린샷**
+![image](https://github.com/user-attachments/assets/2d9a3fbb-828c-4599-a366-a21962d4eaab)
+
+
 
 **테스트 성공 스크린샷:**
 ![image](https://github.com/user-attachments/assets/cce441cc-7e64-448b-b2fe-b5ad1060a7c7)

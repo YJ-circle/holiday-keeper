@@ -224,11 +224,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         allAvailableCountries.filter(country => {
             return country.name.toLowerCase().includes(filterText) ||
-                   country.countryCode.toLowerCase().includes(filterText);
+                   country.code.toLowerCase().includes(filterText);
         }).forEach(country => {
             const option = document.createElement('option');
-            option.value = country.countryCode;
-            option.textContent = `${country.name} (${country.countryCode})`;
+            option.value = country.code;
+            option.textContent = `${country.name} (${country.code})`;
             availableCountriesSelect.appendChild(option);
         });
     }

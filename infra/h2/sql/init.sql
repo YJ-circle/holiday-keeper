@@ -39,6 +39,10 @@ CREATE TABLE holiday_types
     type       VARCHAR(20)
 );
 
+CREATE INDEX idx_holiday_country ON holiday (country_code);
+
+CREATE INDEX idx_holiday_date_country ON holiday (date, country_code);
+
 ALTER TABLE holiday_counties
     ADD CONSTRAINT fk_holiday_counties_on_holiday_entity FOREIGN KEY (holiday_id) REFERENCES holiday (id);
 

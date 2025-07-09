@@ -2,14 +2,10 @@
 
 Nager.Date의 외부 API를 활용하여 전 세계 공휴일 데이터를 저장하고 관리하는 미니 서비스입니다.
 
-## 기술 스택
+## 데모 페이지
+[데모 웹 페이지](https://holiday-demo.techlog.dev/)
 
-- **언어**: Java 21
-- **프레임워크**: Spring Boot 3.4.7
-- **데이터베이스**: H2
-- **ORM**: JPA (Hibernate)
-- **빌드 도구**: Gradle
-- **API 문서화**: OpenAPI 3 (Swagger UI)
+[데모 Swagger UI](https://holiday-demo.techlog.dev/swagger-ui/index.html)
 
 ## 실행 방법
 ### 로컬 환경에서 직접 실행 (인메모리 DB)
@@ -185,5 +181,3 @@ docker-compose -p "holiday-keeper" down --rmi all --volumes --remove-orphans
 ![image](https://github.com/user-attachments/assets/31f00688-6746-458f-b426-c188a60c92a4)
 
 
-## 데모 페이지
-[https://holiday-demo.techlog.dev/](https://holiday-demo.techlog.dev/)

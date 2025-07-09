@@ -62,12 +62,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     let krExists = false;
                     allAvailableCountries.forEach(country => {
                         const option = document.createElement('option');
-                        option.value = country.countryCode;
-                        option.textContent = `${country.name} (${country.countryCode})`;
+                        option.value = country.code;
+                        option.textContent = `${country.name} (${country.code})`;
                         countrySelect.appendChild(option.cloneNode(true));
                         availableCountriesSelect.appendChild(option);
 
-                        if (country.countryCode === 'KR') {
+                        if (country.code === 'KR') {
                             krExists = true;
                         }
                     });
@@ -174,21 +174,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, 5000);
             })
             .catch(error => {
-                console.error('Error starting country scraping job:', error);
-                alert('Failed to start country scraping job.');
+                alert('국가 수집 작업 요청을 실패했습니다.');
             });
     }
 
     function scrapeHolidays() {
         const year = yearScrapeInput.value;
         if (!year) {
-            alert('Please enter a year to scrape holidays.');
+            alert('스크랩 하고자하는 연도를 입력해주세요.');
             return;
         }
 
         const selectedCountries = Array.from(selectedCountriesSelect.options).map(opt => opt.value);
         if (selectedCountries.length === 0) {
-            alert('Please select at least one country to scrape.');
+            alert('적어도 1개 이상의 국가를 선택해주세요.');
             return;
         }
 
@@ -206,12 +205,10 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(response => response.json())
         .then(data => {
-            alert(`Holiday scraping job for ${year} and selected countries started successfully!`);
-            console.log(data);
+            alert(`선택된 국가의 ${year}연도 공휴일 수집 요청을 성공적으로 전송했습니다.`);
         })
         .catch(error => {
-            console.error(`Error starting holiday scraping job:`, error);
-            alert(`Failed to start holiday scraping job.`);
+            alert(`공휴일 수집 요청 전송에 실패했습니다.`);
         });
     }
 
@@ -223,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function filterAvailableCountries() {
         const filterText = filterAvailableInput.value.toLowerCase();
-        availableCountriesSelect.innerHTML = ''; // Clear current options
+        availableCountriesSelect.innerHTML = '';
 
         allAvailableCountries.filter(country => {
             return country.name.toLowerCase().includes(filterText) ||

@@ -10,13 +10,13 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import com.thelightway.planitsquare.task.common.batch.TaskExecutorConfig;
+import com.thelightway.planitsquare.task.holiday.entity.HolidayEntity;
+import com.thelightway.planitsquare.task.scraper.holiday.batch.dto.Holiday;
 import com.thelightway.planitsquare.task.scraper.holiday.batch.partitioner.HolidayScraperPartitionerByRequest;
 import com.thelightway.planitsquare.task.scraper.holiday.batch.partitioner.HolidayScraperPartitionerWithAllCountry;
 import com.thelightway.planitsquare.task.scraper.holiday.batch.processor.HolidayScraperItemProcessor;
 import com.thelightway.planitsquare.task.scraper.holiday.batch.reader.HolidayScraperItemReader;
 import com.thelightway.planitsquare.task.scraper.holiday.batch.writer.HolidayItemWriter;
-import com.thelightway.planitsquare.task.scraper.holiday.dto.Holiday;
-import com.thelightway.planitsquare.task.holiday.entity.HolidayEntity;
 
 @Configuration
 public class HolidayScraperStepConfig {
@@ -36,7 +36,7 @@ public class HolidayScraperStepConfig {
 
 	@Bean(HOLIDAY_SCRAPER_ALL_COUNTRY_STEP)
 	public Step createMasterStep(@Qualifier(holidayScraperStepName) Step scraperStep,
-								HolidayScraperPartitionerWithAllCountry partitioner) {
+		HolidayScraperPartitionerWithAllCountry partitioner) {
 		return new StepBuilder(HOLIDAY_SCRAPER_ALL_COUNTRY_STEP, jobRepository)
 			.partitioner(holidayScraperStepName, partitioner)
 			.step(scraperStep)
@@ -47,7 +47,7 @@ public class HolidayScraperStepConfig {
 
 	@Bean(HOLIDAY_SCRAP_MANUAL_STEP)
 	public Step createHolidayStepByManual(@Qualifier(holidayScraperStepName) Step scraperStep,
-										HolidayScraperPartitionerByRequest partitioner) {
+		HolidayScraperPartitionerByRequest partitioner) {
 		return new StepBuilder(HOLIDAY_SCRAP_MANUAL_STEP, jobRepository)
 			.partitioner(holidayScraperStepName, partitioner)
 			.step(scraperStep)

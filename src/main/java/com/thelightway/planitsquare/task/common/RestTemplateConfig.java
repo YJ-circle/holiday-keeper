@@ -8,6 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * API 요청을 위한 RestTemplate Bean 설정입니다.
+ */
 @Configuration
 public class RestTemplateConfig {
 

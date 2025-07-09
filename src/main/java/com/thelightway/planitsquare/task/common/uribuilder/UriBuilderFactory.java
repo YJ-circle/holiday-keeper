@@ -11,6 +11,10 @@ import com.thelightway.planitsquare.task.common.uribuilder.exception.UriBuilderE
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * RestTemplate으로 공휴일 API에 요청을 보내기 위한
+ * URI Builder 객체를 생성하는 클래스입니다.
+ */
 @Slf4j
 public class UriBuilderFactory {
 	private static final Map<String, UriBuilder> uriBuilderMap = new ConcurrentHashMap<>();

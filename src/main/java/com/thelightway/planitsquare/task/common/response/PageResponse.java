@@ -4,6 +4,9 @@ import java.util.List;
 
 import lombok.Builder;
 
+/**
+ * 페이지네이션 응답을 위한 응답 객체입니다.
+ */
 @Builder
 public record PageResponse<T>(
 	List<T> content,
@@ -11,6 +14,7 @@ public record PageResponse<T>(
 	int size,
 	long totalElements,
 	int totalPages
-){}
+) {
+}
 
 

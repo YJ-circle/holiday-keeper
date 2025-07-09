@@ -9,9 +9,13 @@ import com.thelightway.planitsquare.task.common.response.ApiResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * API 요청의 예외를 전역으로 처리하기 위한 클래스입니다.
+ */
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
 	@ExceptionHandler(CustomException.class)
 	public ResponseEntity<ApiResponse<Void>> handleCustomException(CustomException ex) {
 		return buildErrorResponse(

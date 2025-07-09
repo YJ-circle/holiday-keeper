@@ -11,6 +11,9 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 
+/**
+ * Entity 생성일, 수정일을 관리하는 Audit Entity 입니다.
+ */
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 @Getter

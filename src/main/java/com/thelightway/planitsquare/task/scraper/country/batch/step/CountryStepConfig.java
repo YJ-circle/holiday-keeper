@@ -1,4 +1,4 @@
-package com.thelightway.planitsquare.task.scraper.country.batch;
+package com.thelightway.planitsquare.task.scraper.country.batch.step;
 
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.repository.JobRepository;
@@ -6,6 +6,8 @@ import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
+
+import com.thelightway.planitsquare.task.scraper.country.batch.tasklet.CountryScrapTasklet;
 
 import lombok.RequiredArgsConstructor;
 

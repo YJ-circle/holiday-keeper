@@ -4,9 +4,12 @@ import org.springframework.http.HttpStatus;
 
 import lombok.Getter;
 
+/**
+ * API 요청의 오류를 전역으로 처리하기 위한 Custom Exception 입니다.
+ */
 @Getter
 public abstract class CustomException extends RuntimeException {
-	private HttpStatus httpStatus;
+	private final HttpStatus httpStatus;
 
 	public CustomException(HttpStatus httpStatus, String message) {
 		super(message);

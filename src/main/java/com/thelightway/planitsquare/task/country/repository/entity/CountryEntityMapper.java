@@ -1,6 +1,7 @@
 package com.thelightway.planitsquare.task.country.repository.entity;
 
-import com.thelightway.planitsquare.task.country.dto.Country;
+import com.thelightway.planitsquare.task.country.dto.CountryResponse;
+import com.thelightway.planitsquare.task.scraper.country.batch.dto.Country;
 
 public class CountryEntityMapper {
 	public static CountryEntity toEntity(Country country) {
@@ -10,8 +11,8 @@ public class CountryEntityMapper {
 			.build();
 	}
 
-	public static Country toDto(CountryEntity countryEntity) {
-		return Country.builder()
+	public static CountryResponse toResponse(CountryEntity countryEntity) {
+		return CountryResponse.builder()
 			.code(countryEntity.getCode())
 			.name(countryEntity.getName())
 			.build();

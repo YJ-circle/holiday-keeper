@@ -1,4 +1,4 @@
-package com.thelightway.planitsquare.task.scraper.country.batch;
+package com.thelightway.planitsquare.task.scraper.country.batch.tasklet;
 
 import java.net.URI;
 import java.util.Arrays;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.thelightway.planitsquare.task.common.uribuilder.UriBuilderFactory;
-import com.thelightway.planitsquare.task.country.dto.Country;
+import com.thelightway.planitsquare.task.scraper.country.batch.dto.Country;
 import com.thelightway.planitsquare.task.country.repository.entity.CountryEntity;
 import com.thelightway.planitsquare.task.country.repository.entity.CountryEntityMapper;
 import com.thelightway.planitsquare.task.country.repository.entity.CountryJpaRepository;
@@ -63,13 +63,12 @@ public class CountryScrapTasklet implements Tasklet {
 	/**
 	 * 국가 정보 수집 작업을 수행합니다.
 	 *
-	 * <p>작업 흐름은 다음과 같습니다:
-	 * <ol>
-	 *   <li>{@link #requestGetCountry()} 호출하여 API에서 국가 정보 배열을 조회</li>
-	 *   <li>조회된 국가 정보를 DB에 저장/업데이트(upsert)</li>
-	 *   <li>이전에 비활성화된 국가 레코드를 물리 삭제(purge)</li>
-	 *   <li>현재 API 응답에 없는 국가를 소프트 삭제(active=false) 처리</li>
-	 * </ol>
+	 * 작업 흐름은 다음과 같습니다:
+	 *
+	 * 1. requestGetCountry()호출하여 API에서 국가 정보 배열을 조회
+	 * 2. 조회된 국가 정보를 DB에 저장/업데이트(upsert)
+	 * 3. 이전에 비활성화된 국가 레코드를 물리 삭제(purge)
+	 * 4. 현재 API 응답에 없는 국가를 소프트 삭제(active=false) 처리
 	 *
 	 * @param contribution 현재 Step 의 실행 컨텍스트 정보
 	 * @param chunkContext 청크 처리 관련 컨텍스트 정보
@@ -172,7 +171,7 @@ public class CountryScrapTasklet implements Tasklet {
 		try {
 			return countryJpaRepository.findAllByActive(true).stream()
 				.filter(c -> !updateCountries.contains(c.getCode()))
-				.peek(c -> c.changeDeleteStatus(false))
+				.peek(c -> c.changeActiveStatus(false))
 				.toList();
 		} catch (Exception e) {
 			throw new DatabaseWriteException("삭제된 국가 정보 소프트 삭제 실패", e);

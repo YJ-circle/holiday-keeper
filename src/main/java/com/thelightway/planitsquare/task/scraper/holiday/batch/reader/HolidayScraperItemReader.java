@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.thelightway.planitsquare.task.common.uribuilder.UriBuilderFactory;
-import com.thelightway.planitsquare.task.scraper.holiday.dto.Holiday;
+import com.thelightway.planitsquare.task.scraper.holiday.batch.dto.Holiday;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,7 +42,7 @@ public class HolidayScraperItemReader implements ItemReader<Holiday> {
 
 	@BeforeStep
 	public void beforeStep(StepExecution stepExecution) {
-		if(year == null || year.isEmpty()) {
+		if (year == null || year.isEmpty()) {
 			//TODO: 추후 예외 처리
 			throw new RuntimeException("연도는 빈 값일 수 없습니다.");
 		}
@@ -53,7 +53,6 @@ public class HolidayScraperItemReader implements ItemReader<Holiday> {
 		log.info("  - " + countryIds + ": " + year);
 		for (String countryId : countryIds) {
 			URI uri = UriBuilderFactory.builder(host).build(basePath + "/" + year + "/" + countryId);
-			System.out.println("uri = " + uri);
 			Holiday[] holidayArrays = restTemplate.getForObject(uri, Holiday[].class);
 			if (holidayArrays == null || holidayArrays.length == 0) {
 				// TODO: 예외처리

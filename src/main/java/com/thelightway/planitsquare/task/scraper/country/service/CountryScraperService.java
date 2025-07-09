@@ -12,7 +12,7 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
 
 import com.thelightway.planitsquare.task.common.batch.TaskExecutorConfig;
-import com.thelightway.planitsquare.task.scraper.country.batch.CountryJobConfig;
+import com.thelightway.planitsquare.task.scraper.country.batch.job.CountryJobConfig;
 
 @Service
 public class CountryScraperService {
@@ -47,7 +47,7 @@ public class CountryScraperService {
 				try {
 					jobLauncher.run(countryScrapJob, params);
 				} catch (JobExecutionException e) {
-					//잡 실행 오류
+					//TODO: 예외처리 추가
 				} finally {
 					isRunning.set(false);
 				}

@@ -12,26 +12,21 @@ import org.springframework.batch.item.ExecutionContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.thelightway.planitsquare.task.country.repository.entity.CountryEntity;
-import com.thelightway.planitsquare.task.country.repository.entity.CountryJpaRepository;
-
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Scrap Controller로 요청을 받은 경우 비동기로 국가별 공휴일 정보를 수집하기 위한 파티셔너
+ */
 @Slf4j
 @Component
 @StepScope
 public class HolidayScraperPartitionerByRequest implements Partitioner {
 	private final String requestCountries;
-	private final ObjectMapper objectMapper;
 
 	public HolidayScraperPartitionerByRequest(
 		@Value("#{jobParameters['countryCodes']}") String countries
 	) {
 		this.requestCountries = countries;
-		this.objectMapper = new ObjectMapper();
 	}
 
 	@Override

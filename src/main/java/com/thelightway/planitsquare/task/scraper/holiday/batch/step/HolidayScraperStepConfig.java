@@ -11,6 +11,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import com.thelightway.planitsquare.task.common.batch.TaskExecutorConfig;
 import com.thelightway.planitsquare.task.holiday.entity.HolidayEntity;
+import com.thelightway.planitsquare.task.scraper.exception.RetryableException;
 import com.thelightway.planitsquare.task.scraper.holiday.batch.dto.Holiday;
 import com.thelightway.planitsquare.task.scraper.holiday.batch.partitioner.HolidayScraperPartitionerByRequest;
 import com.thelightway.planitsquare.task.scraper.holiday.batch.partitioner.HolidayScraperPartitionerWithAllCountry;
@@ -68,8 +69,10 @@ public class HolidayScraperStepConfig {
 			.processor(processor)
 			.writer(writer)
 			.faultTolerant()
-			.retry(Exception.class)
+			.retry(RetryableException.class)
 			.retryLimit(3)
+			.skip(Exception.class)
+			.skipLimit(10)
 			.build();
 	}
 
